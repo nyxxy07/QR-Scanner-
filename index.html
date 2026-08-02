@@ -3,269 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="description" content="A privacy-focused QR code scanner and phishing risk analyser.">
   <title>QR Safety Scanner</title>
-
   <style>
-    :root {
-      --background: #050809;
-      --panel: #0b1113;
-      --green: #00ff9c;
-      --text: #eafff7;
-      --muted: #91a8a0;
-      --border: rgba(0, 255, 156, 0.22);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      min-height: 100vh;
-      margin: 0;
-      color: var(--text);
-      background:
-        linear-gradient(rgba(0, 255, 156, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 156, 0.025) 1px, transparent 1px),
-        var(--background);
-      background-size: 40px 40px;
-      font-family: Arial, sans-serif;
-    }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 7%;
-      background: rgba(5, 8, 9, 0.9);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .logo {
-      color: var(--green);
-      font-family: monospace;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-
-    .privacy {
-      color: var(--muted);
-      font-family: monospace;
-      font-size: 0.85rem;
-    }
-
-    main {
-      width: min(850px, 90%);
-      margin: auto;
-      padding: 70px 0;
-      text-align: center;
-    }
-
-    .label {
-      color: var(--green);
-      font-family: monospace;
-    }
-
-    h1 {
-      margin: 12px 0;
-      font-size: clamp(2.5rem, 7vw, 5rem);
-      line-height: 1.05;
-    }
-
-    .introduction {
-      max-width: 650px;
-      margin: 0 auto 40px;
-      color: var(--muted);
-    }
-
-    .scanner {
-      padding: 35px;
-      background: rgba(11, 17, 19, 0.92);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      box-shadow: 0 0 45px rgba(0, 255, 156, 0.06);
-    }
-
-    .upload-area {
-      display: block;
-      padding: 55px 20px;
-      cursor: pointer;
-      border: 2px dashed var(--border);
-      border-radius: 10px;
-      transition: 0.25s;
-    }
-
-    .upload-area:hover {
-      background: rgba(0, 255, 156, 0.04);
-      border-color: var(--green);
-    }
-
-    .qr-icon {
-      margin-bottom: 15px;
-      color: var(--green);
-      font-size: 3rem;
-    }
-
-    .upload-area strong {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 1.1rem;
-    }
-
-    .upload-area span {
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    #qrInput {
-      display: none;
-    }
-
-    #preview {
-      display: none;
-      max-width: 260px;
-      max-height: 260px;
-      margin: 25px auto 0;
-      padding: 8px;
-      background: white;
-      border: 1px solid var(--green);
-      border-radius: 8px;
-    }
-
-    .scan-button {
-      width: 100%;
-      margin-top: 22px;
-      padding: 14px;
-      color: #00150d;
-      cursor: pointer;
-      background: var(--green);
-      border: none;
-      border-radius: 7px;
-      font-size: 1rem;
-      font-weight: bold;
-      transition: 0.25s;
-    }
-
-    .scan-button:hover {
-      box-shadow: 0 0 25px rgba(0, 255, 156, 0.35);
-      transform: translateY(-2px);
-    }
-
-    .scan-button:disabled {
-      cursor: not-allowed;
-      box-shadow: none;
-      opacity: 0.4;
-      transform: none;
-    }
-
-    .notice {
-      margin-top: 25px;
-      padding: 15px;
-      color: var(--muted);
-      background: rgba(0, 255, 156, 0.04);
-      border-left: 3px solid var(--green);
-      text-align: left;
-      font-size: 0.88rem;
-    }
-
-    footer {
-      padding: 25px;
-      color: var(--muted);
-      border-top: 1px solid var(--border);
-      text-align: center;
-      font-family: monospace;
-      font-size: 0.85rem;
-    }
-
-    @media (max-width: 600px) {
-      header {
-        padding: 17px 5%;
-      }
-
-      .privacy {
-        display: none;
-      }
-
-      main {
-        padding: 45px 0;
-      }
-
-      .scanner {
-        padding: 20px;
-      }
-    }
+    :root{--bg:#050809;--panel:#0b1113;--green:#00ff9c;--text:#eafff7;--muted:#91a8a0;--border:rgba(0,255,156,.22);--yellow:#ffb800;--red:#ff4155}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{min-height:100vh;margin:0;color:var(--text);background:linear-gradient(rgba(0,255,156,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,156,.025) 1px,transparent 1px),var(--bg);background-size:40px 40px;font-family:Arial,sans-serif;line-height:1.55}
+    header{display:flex;justify-content:space-between;align-items:center;padding:20px 7%;background:rgba(5,8,9,.92);border-bottom:1px solid var(--border)}
+    .logo,.privacy,.label,footer{font-family:monospace}.logo,.label{color:var(--green)}.logo{font-size:1.2rem;font-weight:bold}.privacy{color:var(--muted);font-size:.85rem}
+    main{width:min(850px,90%);margin:auto;padding:70px 0;text-align:center}h1{margin:12px 0;font-size:clamp(2.5rem,7vw,5rem);line-height:1.05}.intro{max-width:650px;margin:0 auto 40px;color:var(--muted)}
+    .scanner{padding:35px;background:rgba(11,17,19,.94);border:1px solid var(--border);border-radius:14px;box-shadow:0 0 45px rgba(0,255,156,.06)}
+    .upload-area{display:block;padding:55px 20px;cursor:pointer;border:2px dashed var(--border);border-radius:10px;transition:.25s}.upload-area:hover,.upload-area.dragging{background:rgba(0,255,156,.04);border-color:var(--green)}.qr-icon{margin-bottom:15px;color:var(--green);font-size:3rem}.upload-area strong{display:block;margin-bottom:5px;font-size:1.1rem}.upload-area span{color:var(--muted);font-size:.9rem}#qrInput{display:none}#preview{display:none;max-width:260px;max-height:260px;margin:25px auto 0;padding:8px;background:#fff;border:1px solid var(--green);border-radius:8px}
+    .scan-button{width:100%;margin-top:22px;padding:14px;color:#00150d;cursor:pointer;background:var(--green);border:0;border-radius:7px;font-size:1rem;font-weight:bold;transition:.25s}.scan-button:hover:not(:disabled){box-shadow:0 0 25px rgba(0,255,156,.35);transform:translateY(-2px)}.scan-button:disabled{cursor:not-allowed;opacity:.4}
+    .notice{margin-top:25px;padding:15px;color:var(--muted);background:rgba(0,255,156,.04);border-left:3px solid var(--green);text-align:left;font-size:.88rem}
+    .result{display:none;margin-top:25px;padding:22px;border:1px solid var(--border);border-radius:10px;text-align:left;overflow-wrap:anywhere}.result.low{display:block;background:rgba(0,255,156,.07);border-color:var(--green)}.result.medium{display:block;background:rgba(255,184,0,.08);border-color:var(--yellow)}.result.high,.result.error{display:block;background:rgba(255,65,85,.08);border-color:var(--red)}.result h2{margin:0 0 8px;font-size:1.25rem}.result-url{padding:12px;color:var(--text);background:var(--bg);border-radius:6px;font-family:monospace}.result li{margin-bottom:6px;color:var(--muted)}.result button{margin:8px 8px 0 0;padding:10px 16px;color:var(--green);cursor:pointer;background:transparent;border:1px solid var(--green);border-radius:6px}.result button:hover{background:rgba(0,255,156,.08)}
+    footer{padding:25px;color:var(--muted);border-top:1px solid var(--border);text-align:center;font-size:.85rem}
+    @media(max-width:600px){header{padding:17px 5%}.privacy{display:none}main{padding:45px 0}.scanner{padding:20px}.upload-area{padding:38px 16px}}
   </style>
 </head>
-
 <body>
-  <header>
-    <div class="logo">&lt;QR Safety Scanner /&gt;</div>
-    <div class="privacy">LOCAL ANALYSIS · PRIVACY FIRST</div>
-  </header>
-
+  <header><div class="logo">&lt;QR Safety Scanner /&gt;</div><div class="privacy">LOCAL ANALYSIS · PRIVACY FIRST</div></header>
   <main>
     <div class="label">ranjish@nyxxy:~$ inspect-qr</div>
-
     <h1>Scan before<br>you trust.</h1>
-
-    <p class="introduction">
-      Reveal the content hidden inside a QR code and check its URL for
-      common phishing and security warning signs before opening it.
-    </p>
-
+    <p class="intro">Reveal the content hidden inside a QR code and check its URL for common phishing and security warning signs before opening it.</p>
     <section class="scanner">
-      <label class="upload-area" for="qrInput">
-        <div class="qr-icon">▦</div>
-        <strong>Select a QR-code image</strong>
-        <span>Click here to choose a PNG, JPG or WebP image</span>
+      <label class="upload-area" id="dropArea" for="qrInput">
+        <div class="qr-icon">▦</div><strong>Select a QR-code image</strong><span>Choose or drop a PNG, JPG or WebP image</span>
       </label>
-
-      <input
-        id="qrInput"
-        type="file"
-        accept="image/png,image/jpeg,image/webp"
-      >
-
+      <input id="qrInput" type="file" accept="image/png,image/jpeg,image/webp">
       <img id="preview" alt="Selected QR-code preview">
-
-      <button id="scanButton" class="scan-button" disabled>
-        Analyse QR code
-      </button>
-
-      <div class="notice">
-        <strong>Privacy:</strong> The selected image will be processed locally
-        inside your browser. It will not be uploaded to a server. Results are
-        indicator-based and cannot guarantee that a destination is safe.
-      </div>
+      <button id="scanButton" class="scan-button" disabled>Analyse QR code</button>
+      <div class="notice"><strong>Privacy:</strong> The image is processed locally in your browser and is not uploaded. This is an indicator-based assessment, not a guarantee that a destination is safe.</div>
+      <div id="result" class="result" aria-live="polite"></div>
     </section>
   </main>
+  <footer>QR Safety Scanner · Built by Ranjish Shrestha</footer>
 
-  <footer>
-    QR Safety Scanner · Built by Ranjish Shrestha
-  </footer>
-
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
   <script>
-    const qrInput = document.getElementById("qrInput");
-    const preview = document.getElementById("preview");
-    const scanButton = document.getElementById("scanButton");
-
-    qrInput.addEventListener("change", function () {
-      const file = qrInput.files[0];
-
-      if (!file) {
-        preview.style.display = "none";
-        scanButton.disabled = true;
-        return;
-      }
-
-      preview.src = URL.createObjectURL(file);
-      preview.style.display = "block";
-      scanButton.disabled = false;
-    });
-
-    scanButton.addEventListener("click", function () {
-      alert("Interface working! QR decoding will be added next.");
-    });
+    const input=document.getElementById('qrInput'),preview=document.getElementById('preview'),scan=document.getElementById('scanButton'),result=document.getElementById('result'),drop=document.getElementById('dropArea');
+    let objectURL='';
+    input.addEventListener('change',()=>loadFile(input.files[0]));
+    ['dragenter','dragover'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.add('dragging')}));
+    ['dragleave','drop'].forEach(e=>drop.addEventListener(e,x=>{x.preventDefault();drop.classList.remove('dragging')}));
+    drop.addEventListener('drop',e=>loadFile(e.dataTransfer.files[0]));
+    function loadFile(file){clearResult();scan.disabled=true;if(!file)return;if(!file.type.startsWith('image/'))return showError('Please select a valid image file.');if(objectURL)URL.revokeObjectURL(objectURL);objectURL=URL.createObjectURL(file);preview.src=objectURL;preview.style.display='block';scan.disabled=false}
+    scan.addEventListener('click',decodeQR);
+    function decodeQR(){if(!preview.src)return showError('Select a QR-code image first.');scan.disabled=true;scan.textContent='Scanning...';const img=new Image();img.onload=()=>{try{const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d',{willReadFrequently:true});canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;ctx.drawImage(img,0,0);const data=ctx.getImageData(0,0,canvas.width,canvas.height);const code=jsQR(data.data,data.width,data.height,{inversionAttempts:'attemptBoth'});code?analyse(code.data):showError('No readable QR code was detected. Try a clearer or larger image.')}catch(e){showError('The image could not be analysed.')}finally{scan.disabled=false;scan.textContent='Analyse QR code'}};img.onerror=()=>{scan.disabled=false;scan.textContent='Analyse QR code';showError('The selected image could not be processed.')};img.src=preview.src}
+    function analyse(content){const value=content.trim();let url;try{url=new URL(value)}catch{return showText(value)}if(!['http:','https:'].includes(url.protocol))return showText(value);let score=0,w=[];const full=url.href.toLowerCase(),host=url.hostname.toLowerCase();const add=(points,msg)=>{score+=points;w.push(msg)};
+      if(url.protocol==='http:')add(2,'The destination does not use encrypted HTTPS.');
+      if(/^(?:\d{1,3}\.){3}\d{1,3}$/.test(host))add(3,'The URL uses an IP address instead of a normal domain.');
+      if(host.startsWith('xn--')||host.includes('.xn--'))add(3,'The domain uses Punycode, which can hide look-alike characters.');
+      if(url.href.includes('@'))add(3,'The URL contains an @ symbol that may disguise its destination.');
+      if(['bit.ly','tinyurl.com','t.co','is.gd','cutt.ly','rb.gy','shorturl.at'].includes(host))add(2,'A URL shortener conceals the final destination.');
+      const words=['login','verify','verification','password','account','urgent','update','payment','wallet','security','suspended','confirm'];const found=words.filter(x=>full.includes(x));if(found.length)add(Math.min(found.length,3),'Suspicious URL terms detected: '+found.join(', ')+'.');
+      if(/\.(exe|scr|bat|cmd|msi|apk|jar|ps1|zip)(?:$|[?#])/i.test(url.href))add(4,'The URL appears to reference a potentially dangerous download.');
+      if([/paypa1/i,/micr0soft/i,/g00gle/i,/faceb00k/i,/amaz0n/i,/app1e/i].some(x=>x.test(host)))add(4,'The domain contains a possible look-alike brand name.');
+      if(host.split('.').length>4)add(1,'The hostname contains an unusual number of subdomains.');
+      if(url.href.length>120)add(1,'The URL is unusually long.');
+      if(url.port&&!['80','443'].includes(url.port))add(2,'The URL uses an unusual network port.');
+      displayURL(url.href,score,w)
+    }
+    function displayURL(url,score,w){const level=score>=6?'high':score>=3?'medium':'low';const title=score>=6?'HIGH RISK — POSSIBLE PHISHING':score>=3?'SUSPICIOUS — VERIFY BEFORE OPENING':'LOW RISK — NO COMMON WARNING SIGNS';const advice=score>=6?'Do not open this destination unless you independently verify it.':score>=3?'Check the domain carefully and verify the QR code’s source.':'No common phishing indicators were detected, but safety is not guaranteed.';result.className='result '+level;result.innerHTML='';append('h2',title);append('p','Risk score: '+score);append('strong','Decoded destination:');append('p',url,'result-url');if(w.length){append('strong','Detected indicators:');const ul=document.createElement('ul');w.forEach(x=>{const li=document.createElement('li');li.textContent=x;ul.appendChild(li)});result.appendChild(ul)}append('p',advice);button('Copy URL',async b=>{try{await navigator.clipboard.writeText(url);b.textContent='Copied!';setTimeout(()=>b.textContent='Copy URL',1500)}catch{b.textContent='Copy failed'}});if(score<3)button('Open URL',()=>{if(confirm('A low-risk result does not guarantee safety. Open this URL?'))window.open(url,'_blank','noopener,noreferrer')});result.scrollIntoView({behavior:'smooth',block:'nearest'})}
+    function showText(value){result.className='result medium';result.innerHTML='';append('h2','QR CODE DOES NOT CONTAIN A WEB URL');append('strong','Decoded content:');append('p',value||'(empty)','result-url');append('p','Review this content carefully before using it.')}
+    function showError(msg){result.className='result error';result.innerHTML='';append('h2','SCAN FAILED');append('p',msg)}
+    function clearResult(){result.className='result';result.innerHTML=''}
+    function append(tag,text,cls=''){const el=document.createElement(tag);el.textContent=text;if(cls)el.className=cls;result.appendChild(el);return el}
+    function button(label,handler){const b=document.createElement('button');b.type='button';b.textContent=label;b.addEventListener('click',()=>handler(b));result.appendChild(b)}
   </script>
 </body>
 </html>
